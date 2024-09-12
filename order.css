@@ -1,0 +1,28 @@
+.card {
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-header {
+    background-color: #f8f9fa;
+    border-bottom: none;
+  }
+  
+  .card-body {
+    padding: 2rem;
+    background-color: #ffffff;
+    border-radius: 15px;
+  }
+  
+  .btn-primary {
+    background-color: #ffc107;
+    border-color: #ffc107;
+    color: #212529;
+  }
+  
+  .btn-primary:hover {
+    background-color: #e0a800;
+    border-color: #d39e00;
+  }
+  
