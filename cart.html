@@ -209,25 +209,6 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <script>
-        let btnDecrement = document.querySelectorAll(".decrement i");
-        let btnIncrement = document.querySelectorAll(".increment i");
-        let countProduct = document.querySelectorAll(".quantity input.number");
-        btnIncrement.forEach((btnI, pos)=>{
-            btnI.addEventListener('click', () => {
-                const currentValue = parseInt(countProduct[pos].value);
-                countProduct[pos].value = currentValue + 1;
-            });
-        })
-        btnDecrement.forEach((btnD, pos)=>{
-            btnD.addEventListener('click', () => {
-                const currentValue = parseInt(countProduct[pos].value);
-                if (currentValue > 1) {
-                    countProduct[pos].value = currentValue - 1;
-                }
-            })  
-        });
-    </script>
     <script src="js/pageCart.js"></script>
 </body>
 </html>

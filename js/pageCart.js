@@ -9,6 +9,17 @@ document.addEventListener("DOMContentLoaded", () => {
   getCartData();
 });
 
+let updateQuantity = (index, change) => {
+  let products = JSON.parse(localStorage.getItem("carrito")) || [];
+  if (products[index]) {
+    products[index].cantidad = (parseInt(products[index].cantidad) || 1) + change;
+    if (products[index].cantidad < 1) products[index].cantidad = 1; 
+
+    localStorage.setItem("carrito", JSON.stringify(products));
+    getCartData();
+  }
+};
+
 let getCartData = () => {
   let products = JSON.parse(localStorage.getItem("carrito")) || [];
   let subtotal = 0;
@@ -25,7 +36,7 @@ let getCartData = () => {
 
     row.innerHTML = `
       <td class="product-block">
-        <button class="remove-from-cart-btn" data-index="${index}">
+        <button class="remove-from-cart-btn btn" data-index="${index}">
           <i class="fa-solid fa-x"></i>
         </button>
         <img src="${product.imagen}" alt="${product.nombre}">
@@ -36,9 +47,9 @@ let getCartData = () => {
       </td>
       <td>
         <div class="quantity quantity-wrap">
-          <div class="decrement" data-index="${index}"><i class="fa-solid fa-minus"></i></div>
-          <input type="text" name="quantity" value="${cantidad}" maxlength="2" size="1" class="number" data-index="${index}">
-          <div class="increment" data-index="${index}"><i class="fa-solid fa-plus"></i></div>
+          <div class="decrement"><i class="fa-solid fa-minus"></i></div>
+          <input type="text" name="quantity" value="${cantidad}" maxlength="2" size="1" class="number" readonly>
+          <div class="increment"><i class="fa-solid fa-plus"></i></div>
         </div>
       </td>
       <td>
@@ -47,9 +58,19 @@ let getCartData = () => {
     `;
 
     cartTable.appendChild(row);
+  });
 
-    row.querySelector(".increment").addEventListener("click", (e) => updateQuantity(e.target.dataset.index, 1));
-    row.querySelector(".decrement").addEventListener("click", (e) => updateQuantity(e.target.dataset.index, -1));
+  // Agregar eventos de clic a los botones de incremento y decremento
+  cartTable.querySelectorAll(".decrement").forEach((btn, index) => {
+    btn.addEventListener('click', () => {
+      updateQuantity(index, -1);
+    });
+  });
+
+  cartTable.querySelectorAll(".increment").forEach((btn, index) => {
+    btn.addEventListener('click', () => {
+      updateQuantity(index, 1);
+    });
   });
 
   cartTable.addEventListener("click", (e) => {
@@ -62,17 +83,6 @@ let getCartData = () => {
   subtotal = products.reduce((acc, product) => acc + parseFloat(product.precio) * (parseInt(product.cantidad) || 1), 0);
 
   updateOrderSummary(subtotal, valorDomicilio, descuentoPromo);
-};
-
-let updateQuantity = (index, change) => {
-  let products = JSON.parse(localStorage.getItem("carrito")) || [];
-  if (products[index]) {
-    products[index].cantidad = (parseInt(products[index].cantidad) || 1) + change;
-    if (products[index].cantidad < 1) products[index].cantidad = 1; 
-
-    localStorage.setItem("carrito", JSON.stringify(products));
-    getCartData(); 
-  }
 };
 
 let removeFromCart = (index) => {
